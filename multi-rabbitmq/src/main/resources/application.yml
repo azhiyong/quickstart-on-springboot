@@ -1,0 +1,17 @@
+server:
+  port: 8090
+
+rabbit:
+  mq:
+    first:
+      host: 192.168.56.110
+      port: 5672
+      username: admin
+      password: admin
+      vhost: /test
+    second:
+      host: 192.168.56.110
+      port: 5673
+      username: admin
+      password: admin
+      vhost: /test

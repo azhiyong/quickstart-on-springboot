@@ -1,4 +1,4 @@
-package xyz.mdou.springboot.web.configuration;
+package xyz.mdou.springboot.configuration;
 
 import com.rabbitmq.client.ConnectionFactory;
 import lombok.Data;

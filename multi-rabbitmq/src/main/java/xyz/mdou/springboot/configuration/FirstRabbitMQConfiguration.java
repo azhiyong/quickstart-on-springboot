@@ -1,4 +1,4 @@
-package xyz.mdou.springboot.web.configuration;
+package xyz.mdou.springboot.configuration;
 
 import com.google.gson.JsonSyntaxException;
 import org.springframework.amqp.core.*;
@@ -22,9 +22,7 @@ import java.util.List;
 @ConfigurationProperties("rabbit.mq.first")
 public class FirstRabbitMQConfiguration extends AbstractRabbitMQConfiguration {
 
-    private static final String EXCHANGE = "first";
-
-    public static final String FIRST_RABBIT_TEMPLATE = "firstRabbitTemplate";
+    public static final String EXCHANGE = "first";
 
     public static final String API_QUEUE = "API_QUEUE";
     public static final String API_ROUTING_KEY = "API_ROUTING_KEY";
@@ -39,7 +37,7 @@ public class FirstRabbitMQConfiguration extends AbstractRabbitMQConfiguration {
     }
 
     @Primary
-    @Bean(name = FIRST_RABBIT_TEMPLATE)
+    @Bean(name = "firstRabbitTemplate")
     public RabbitTemplate firstRabbitTemplate(@Qualifier("firstConnectionFactory") ConnectionFactory connectionFactory) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
         template.setChannelTransacted(true);
