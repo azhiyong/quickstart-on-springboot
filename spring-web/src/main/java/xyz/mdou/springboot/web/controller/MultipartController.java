@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.mdou.springboot.web.dto.ExcelDto;
+import xyz.mdou.springboot.web.dto.response.RestfulResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +27,7 @@ import java.util.stream.IntStream;
 @RequestMapping("multipart")
 public class MultipartController {
 
-    @PostMapping("/generate")
+    @GetMapping("/generate")
     public void generateExcel(HttpServletResponse response) {
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
@@ -42,8 +43,9 @@ public class MultipartController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<Resource> downloadExcel(HttpServletResponse response,
-                                                  HttpServletRequest request) {
+    public ResponseEntity<Resource> downloadExcel(
+            HttpServletResponse response,
+            HttpServletRequest request) {
         String targetFileName = request.getServletContext().getRealPath("/") + "/template.xlsx";
         File targetFile = new File(targetFileName);
         HttpHeaders headers = new HttpHeaders();
@@ -61,8 +63,9 @@ public class MultipartController {
     }
 
     @PostMapping("/upload")
-    public String uploadExcel(@RequestParam("file") MultipartFile file,
-                              HttpServletRequest request) {
+    public RestfulResponse<List<ExcelDto>> uploadExcel(
+            @RequestParam("file") MultipartFile file,
+            HttpServletRequest request) {
         String targetFileName = request.getServletContext().getRealPath("/") + "/template.xlsx";
         File targetFile = new File(targetFileName);
         try {
@@ -70,15 +73,14 @@ public class MultipartController {
             List<ExcelDto> data = EasyExcel.read(targetFile)
                     .sheet("WorkSheet")
                     .doReadSync();
-            System.out.println(data);
-            return "success";
+            return RestfulResponse.ok(data);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     private List<ExcelDto> data() {
-        return IntStream.range(1, 100000)
+        return IntStream.range(1, 10000)
                 .mapToObj(i -> new ExcelDto()
                         .setId(i)
                         .setDescription("如果你不知道对象的确切类型，RTTI 会告诉你。" +
