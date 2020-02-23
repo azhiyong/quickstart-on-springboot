@@ -7,6 +7,7 @@
 		<module>web</module>
 		<module>actuator</module>
         <module>multi-rabbitmq</module>
+        <module>properties</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
