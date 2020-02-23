@@ -1,4 +1,4 @@
-package xyz.mdou.springboot.queue;
+package xyz.mdou.springboot.multirabbitmq.queue;
 
 public interface MessageConsumer<T> {
 

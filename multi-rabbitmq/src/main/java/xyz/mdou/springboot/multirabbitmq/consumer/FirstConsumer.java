@@ -1,4 +1,4 @@
-package xyz.mdou.springboot.consumer;
+package xyz.mdou.springboot.multirabbitmq.consumer;
 
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -7,8 +7,8 @@ import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
-import xyz.mdou.springboot.configuration.FirstRabbitMQConfiguration;
-import xyz.mdou.springboot.queue.MessageConsumer;
+import xyz.mdou.springboot.multirabbitmq.configuration.FirstRabbitMQConfiguration;
+import xyz.mdou.springboot.multirabbitmq.queue.MessageConsumer;
 
 @Slf4j
 @Component

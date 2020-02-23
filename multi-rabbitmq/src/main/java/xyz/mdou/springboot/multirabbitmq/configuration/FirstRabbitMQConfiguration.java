@@ -1,4 +1,4 @@
-package xyz.mdou.springboot.configuration;
+package xyz.mdou.springboot.multirabbitmq.configuration;
 
 import com.google.gson.JsonSyntaxException;
 import org.springframework.amqp.core.*;

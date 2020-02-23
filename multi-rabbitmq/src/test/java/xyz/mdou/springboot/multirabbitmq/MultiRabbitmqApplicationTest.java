@@ -1,18 +1,18 @@
-package xyz.mdou.springboot;
+package xyz.mdou.springboot.multirabbitmq;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import xyz.mdou.springboot.producer.FirstProducer;
-import xyz.mdou.springboot.producer.SecondProducer;
+import xyz.mdou.springboot.multirabbitmq.producer.FirstProducer;
+import xyz.mdou.springboot.multirabbitmq.producer.SecondProducer;
 
 import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class MessageProducerTest {
+public class MultiRabbitmqApplicationTest {
 
     @Autowired
     private FirstProducer firstProducer;
