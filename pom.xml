@@ -11,6 +11,7 @@
         <module>multi-rabbitmq</module>
         <module>properties</module>
 		<module>log-aop</module>
+		<module>exception-handler</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
