@@ -10,6 +10,7 @@
 		<module>admin-server</module>
         <module>multi-rabbitmq</module>
         <module>properties</module>
+		<module>log-aop</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
