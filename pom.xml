@@ -6,6 +6,8 @@
 	<modules>
 		<module>web</module>
 		<module>actuator</module>
+		<module>admin-client</module>
+		<module>admin-server</module>
         <module>multi-rabbitmq</module>
         <module>properties</module>
     </modules>
@@ -23,12 +25,23 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<spring-boot-admin-starter.version>2.2.2</spring-boot-admin-starter.version>
 		<lombok.version>1.18.8</lombok.version>
 		<gson.version>2.8.6</gson.version>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-starter-server</artifactId>
+				<version>${spring-boot-admin-starter.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-starter-client</artifactId>
+				<version>${spring-boot-admin-starter.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok</artifactId>
