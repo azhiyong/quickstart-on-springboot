@@ -1,13 +1,13 @@
 package xyz.mdou.springboot.jdbctemplate.dao;
 
-import org.apache.tomcat.util.buf.StringUtils;
+import com.sun.deploy.util.StringUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.util.ReflectionUtils;
 import xyz.mdou.springboot.jdbctemplate.annotation.Column;
+import xyz.mdou.springboot.jdbctemplate.annotation.Id;
 import xyz.mdou.springboot.jdbctemplate.annotation.Ignore;
-import xyz.mdou.springboot.jdbctemplate.annotation.PrimaryKey;
 import xyz.mdou.springboot.jdbctemplate.annotation.Table;
 
 import java.lang.reflect.Field;
@@ -26,46 +26,57 @@ public class BaseDao<ENTITY, ID> {
         this.clazz = (Class<ENTITY>) ((ParameterizedType) (getClass().getGenericSuperclass())).getActualTypeArguments()[0];
     }
 
-    public int insert(ENTITY entity) {
+    public int save(ENTITY entity) {
         String table = getTableName();
         List<Field> fields = getFields(entity);
         List<String> columns = getColumns(fields);
-        List<String> params = new ArrayList<>(columns.size());
-        Collections.fill(params, "?");
+        String[] params = new String[columns.size()];
+        Arrays.fill(params, "?");
         Object[] values = fields.stream().map(f -> ReflectionUtils.getField(f, entity)).toArray();
         String sql = String.format("insert into %s (%s) values (%s)",
-                table, StringUtils.join(columns, ','),
-                StringUtils.join(params, ','));
+                table, String.join(",", columns),
+                String.join(",", params));
         return jdbcTemplate.update(sql, values);
     }
 
-    public ENTITY getByPrimaryId(ID id) {
+    public List<ENTITY> findAll() {
         String table = getTableName();
-        String primaryColumn = getPrimaryColumn();
-        String sql = String.format("select * from %s where %s=?", table, primaryColumn);
+        String sql = String.format("select * from %s", table);
         RowMapper<ENTITY> mapper = new BeanPropertyRowMapper<>(clazz);
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, mapper);
+        return jdbcTemplate.query(sql, mapper);
     }
 
-    public int deleteByPrimaryId(ID id) {
+    public ENTITY getOne(ID id) {
         String table = getTableName();
-        String primaryColumn = getPrimaryColumn();
+        String primaryColumn = getIdColumn();
+        String sql = String.format("select * from %s where %s=?", table, primaryColumn);
+        RowMapper<ENTITY> mapper = new BeanPropertyRowMapper<>(clazz);
+        List<ENTITY> entities = jdbcTemplate.query(sql, new Object[]{id}, mapper);
+        return entities.stream().findFirst().orElse(null);
+    }
+
+    public int deleteById(ID id) {
+        String table = getTableName();
+        String primaryColumn = getIdColumn();
         String sql = String.format("delete from %s where %s=?", table, primaryColumn);
         return jdbcTemplate.update(sql, id);
     }
 
-    public int updateByPrimaryId(ID id, ENTITY entity) {
+    public int update(ID id, ENTITY entity) {
         String table = getTableName();
         List<Field> fields = getFields(entity);
         List<String> columns = getColumns(fields);
         String setColumns = columns.stream()
                 .map(s -> String.format("%s=?", s))
                 .collect(Collectors.joining(","));
-        String primaryColumn = getPrimaryColumn();
+        String primaryColumn = getIdColumn();
         String sql = String.format("update %s set %s where %s=?", table, setColumns, primaryColumn);
 
         List<Object> values = fields.stream()
-                .map(f -> ReflectionUtils.getField(f, entity))
+                .map(f -> {
+                    f.setAccessible(true);
+                    return ReflectionUtils.getField(f, entity);
+                })
                 .collect(Collectors.toList());
         values.add(id);
         return jdbcTemplate.update(sql, values.toArray());
@@ -82,14 +93,17 @@ public class BaseDao<ENTITY, ID> {
         Field[] fields = clazz.getDeclaredFields();
         return Arrays.stream(fields)
                 .filter(f -> Objects.isNull(f.getAnnotation(Ignore.class))
-                        || Objects.isNull(f.getAnnotation(PrimaryKey.class)))
-                .filter(f -> Objects.nonNull(ReflectionUtils.getField(f, entity)))
+                        || Objects.isNull(f.getAnnotation(Id.class)))
+                .filter(f -> {
+                    f.setAccessible(true);
+                    return Objects.nonNull(ReflectionUtils.getField(f, entity));
+                })
                 .collect(Collectors.toList());
     }
 
-    private String getPrimaryColumn() {
+    private String getIdColumn() {
         return Arrays.stream(clazz.getDeclaredFields())
-                .filter(f -> Objects.nonNull(f.getAnnotation(PrimaryKey.class)))
+                .filter(f -> Objects.nonNull(f.getAnnotation(Id.class)))
                 .findFirst()
                 .map(f -> Optional.ofNullable(f.getAnnotation(Column.class))
                         .map(Column::value).orElse(f.getName()))

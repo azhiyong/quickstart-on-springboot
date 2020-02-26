@@ -1,17 +1,19 @@
 package xyz.mdou.springboot.jdbctemplate.entity;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 import xyz.mdou.springboot.jdbctemplate.annotation.Column;
-import xyz.mdou.springboot.jdbctemplate.annotation.PrimaryKey;
+import xyz.mdou.springboot.jdbctemplate.annotation.Id;
 import xyz.mdou.springboot.jdbctemplate.annotation.Table;
 
 import java.util.Date;
 
 @Data
+@Accessors(chain = true)
 @Table("user")
 public class UserEntity {
 
-    @PrimaryKey
+    @Id
     private Long uid;
 
     private String name;
