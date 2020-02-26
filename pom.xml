@@ -13,6 +13,7 @@
 		<module>log-aop</module>
 		<module>exception-handler</module>
 		<module>jdbctemplate</module>
+		<module>jpa</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
