@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.mdou.springboot.properties.property.ApplicationProperty;
 import xyz.mdou.springboot.properties.property.AuthorProperty;
+import xyz.mdou.springboot.properties.property.MdouServerProperties;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,9 @@ public class PropertiesController {
     @Autowired
     private AuthorProperty authorProperty;
 
+    @Autowired
+    private MdouServerProperties mdouServerProperties;
+
     @GetMapping
     public String getConfigs() {
         Map<String, Object> configs = new HashMap<>();
@@ -28,6 +32,7 @@ public class PropertiesController {
         configs.put("version", applicationProperty.getVersion());
         configs.put("author", authorProperty.getName());
         configs.put("homepage", authorProperty.getHomepage());
+        configs.put("mdouConfig", mdouServerProperties.getServers());
         return new Gson().toJson(configs);
     }
 }

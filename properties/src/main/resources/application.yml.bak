@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+application:
+  name: springboot-demo
+  version: 1.0.0
+
+author:
+  name: mdou
+  homepage: amaodou.github.io
+
+mdou:
+  servers:
+    cn-north-1:
+      ip: 192.168.56.2
+      nameservers:
+        - 8.8.8.8
+        - 114.114.114.114
+    cn-east-1:
+      ip: 192168.56.3
+      nameservers:
+        - 8.8.8.8
+        - 114.114.114.114
+
