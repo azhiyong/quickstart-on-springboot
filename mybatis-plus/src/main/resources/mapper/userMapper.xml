@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.mdou.springboot.mybatisplus.mapper.UserMapper">
+    <insert id="save" parameterType="xyz.mdou.springboot.mybatisplus.entity.UserEntity">
+        insert into user(name,birthday,create_date,update_date)
+        values(#{user.name},#{user.birthday},now(),now())
+    </insert>
+
+    <insert id="saveAll" parameterType="java.util.List">
+        insert into user(name,birthday,create_date,update_date)
+        values
+        <foreach collection="users" open="(" separator="," close=")" item="user">
+            #{user.name},#{user.birthday},now(),now()
+        </foreach>
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from user where uid=#{uid}
+    </delete>
+</mapper>
