@@ -1,0 +1,14 @@
+spring:
+  mail:
+    host: smtp.aliyun.com
+    port: 465
+    username: zzzzhyli@aliyun.com
+    password: '*'
+    protocol: smtp
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.ssl.enable: true
+
+
