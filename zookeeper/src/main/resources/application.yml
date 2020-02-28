@@ -1,0 +1,4 @@
+zookeeper:
+  url: localhost:2181
+  timeout: 1000
+  retry: 2

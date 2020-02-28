@@ -21,6 +21,7 @@
 		<module>ehcache</module>
 		<module>email</module>
 		<module>task</module>
+		<module>zookeeper</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

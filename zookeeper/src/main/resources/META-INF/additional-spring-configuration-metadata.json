@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "zookeeper.url",
+      "type": "java.lang.String",
+      "description": "url to connect zookeeper."
+    },
+    {
+      "name": "zookeeper.timeout",
+      "type": "java.lang.Integer",
+      "description": "Timeout to connect zookeeper."
+    },
+    {
+      "name": "zookeeper.retry",
+      "type": "java.lang.Integer",
+      "description": "Retry count connect zookeeper."
+    }
+  ]
+}
