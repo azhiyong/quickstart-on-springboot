@@ -1,11 +1,11 @@
-package xyz.mdou.springboot.redis.service;
+package xyz.mdou.springboot.ehcache.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import xyz.mdou.springboot.redis.entity.UserEntity;
+import xyz.mdou.springboot.ehcache.entity.UserEntity;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -33,7 +33,7 @@ public class UserService {
         return user;
     }
 
-    @Cacheable(key = "#uid", value = "user", condition = "#result!=null")
+    @Cacheable(key = "#uid", value = "user")
     public UserEntity getByUid(Long uid) {
         log.info("get user {}", uid);
         return userMap.get(uid);
