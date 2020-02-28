@@ -1,0 +1,11 @@
+spring:
+  redis:
+    host: 192.168.56.110
+    port: 6379
+    password: hao123
+    timeout: 3s
+    lettuce:
+      pool:
+        max-idle: 8
+        min-idle: 0
+        max-active: 8

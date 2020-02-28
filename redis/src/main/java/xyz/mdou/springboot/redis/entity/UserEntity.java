@@ -3,11 +3,12 @@ package xyz.mdou.springboot.redis.entity;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @Accessors(chain = true)
-public class UserEntity {
+public class UserEntity implements Serializable {
 
     private Long uid;
 

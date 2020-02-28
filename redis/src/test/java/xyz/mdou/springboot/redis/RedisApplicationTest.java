@@ -1,4 +1,4 @@
-package xyz.mdou.springboot.mybatisplus;
+package xyz.mdou.springboot.redis;
 
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
