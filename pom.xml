@@ -22,6 +22,7 @@
 		<module>email</module>
 		<module>task</module>
 		<module>zookeeper</module>
+		<module>rabbitmq</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
